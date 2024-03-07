@@ -1,17 +1,16 @@
 import { declarationDB, getConnection } from "../database/dbConections.js";
+import { Categorias } from "../models/categorias.models.js";
 import { Productos } from "../models/productos.model.js";
+import { ProductosCategorias } from "../models/productosCategorias.models.js";
 import { ProductosStokcs } from "../models/productosStocks.models.js";
 import { Tiendas } from "../models/tiendas.model.js";
 
-export const productBasicData = async () => {
-  const findData = await ProductosStokcs.findAll({
+export const categoriesBasicData = async () => {
+  const findData = await ProductosCategorias.findAll({
     include: [
       {
-        model: Tiendas,
-        required: false,
-        where:{
-            estado:1
-        }
+        model: Categorias,
+        required: true,
       },
       {
         model: Productos,
@@ -23,28 +22,31 @@ export const productBasicData = async () => {
     ],
   });
 
-  const data = findData.reduce((listadoProductos, producto)=> {
-    if(!listadoProductos[producto.producto.id]){
-      listadoProductos[producto.producto.id] = {
-        idProducto: producto.producto.id,
-        nombre: producto.producto.nombre,
-        presentacion: producto.producto.presentacion,
-        tiendas:[]
+  const data = findData.reduce((listadoCategorias, categoria)=> {
+    if(!listadoCategorias[categoria.categoria.id]){
+      listadoCategorias[categoria.categoria.id] = {
+        idCategoria: categoria.categoria.id,
+        nombre: categoria.categoria.nombre,
+        cantidadProductos: 0
       }
     }
 
-    const tiendas = {
-      idTienda:producto.tienda.id,
-      nombre:producto.tienda.nombre,
-      stock:producto.cantidad
-    }
+    listadoCategorias[categoria.categoria.id].cantidadProductos += 1
 
-    listadoProductos[producto.producto.id].tiendas.push(tiendas)
-
-    return listadoProductos
+    return listadoCategorias
   },{})
 
   const result = Object.values(data)
+
+  result.sort(function(a,b){
+    if (a.cantidadProductos > b.cantidadProductos){
+        return -1
+    }
+    if (a.cantidadProductos < b.cantidadProductos){
+        return 1
+    }
+    return 0
+  })
 
   return result
 };

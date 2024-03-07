@@ -1,16 +1,17 @@
 import { declarationDB, getConnection } from "../database/dbConections.js";
-import { Categorias } from "../models/categorias.models.js";
 import { Productos } from "../models/productos.model.js";
-import { ProductosCategorias } from "../models/productosCategorias.models.js";
 import { ProductosStokcs } from "../models/productosStocks.models.js";
 import { Tiendas } from "../models/tiendas.model.js";
 
 export const productBasicData = async () => {
-  const findData = await ProductosCategorias.findAll({
+  const findData = await ProductosStokcs.findAll({
     include: [
       {
-        model: Categorias,
-        required: true,
+        model: Tiendas,
+        required: false,
+        where:{
+            estado:1
+        }
       },
       {
         model: Productos,
