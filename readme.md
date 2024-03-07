@@ -18,8 +18,6 @@
 
 **Endpoint:** `http://localhost:3000/api/categorias` **Method** `GET`
 
-**No se alcanzo a finalizar**
-
 4. Construir un Endpoint que permita listar las Promociones que apliquen según un día de la semana.
    En la Tabla PROMOCIONES en la Columna DIAS_SEMANA se encuentra un array con las posiciones de los
    días de la semana donde 0=No aplica - 1=Si aplica empezando el Lunes.
@@ -31,4 +29,7 @@
 
 **Endpoint:** `http://localhost:3000/api/promociones` **Method** `GET`
 
-**No se alcanzo a finalizar**
+Se maneja un parametro en el GET a la hora de hacer la consulta, es **dia**, debe ser un numero del 1 al 7.
+
+**Ejemplo:** `http://localhost:3000/api/promociones?dia=1` **Method** `GET`
+

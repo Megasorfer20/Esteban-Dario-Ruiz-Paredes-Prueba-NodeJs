@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { productBasicData } from "../controllers/productos.controller.js";
 import { categoriesBasicData } from "../controllers/categorias controller.js";
+import { promotionsBasicData } from "../controllers/promociones.controller.js";
 
 const router = Router();
 
@@ -19,7 +20,7 @@ router.get("/:parameter", async (req, res) => {
     }
 
     if (parameter === "promociones") {
-      elementWillGet = await productBasicData();
+      elementWillGet = await promotionsBasicData(req.query);
     }
 
     res

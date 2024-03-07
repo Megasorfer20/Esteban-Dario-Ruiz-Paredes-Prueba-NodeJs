@@ -1,4 +1,3 @@
-import { declarationDB, getConnection } from "../database/dbConections.js";
 import { Productos } from "../models/productos.model.js";
 import { ProductosStokcs } from "../models/productosStocks.models.js";
 import { Tiendas } from "../models/tiendas.model.js";
